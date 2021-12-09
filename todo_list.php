@@ -2,7 +2,6 @@
 session_start();
 //session_unset();
 
-//$_SESSION["todo"] = []; 
 echo "<pre>request :";
 print_r($_REQUEST);
 echo "</pre>";
@@ -17,7 +16,12 @@ $update_item_id = '';
 
 //insert data
 if((isset($_POST["todo_title"]) && $_POST["type"] == "insert") && $_POST["todo_title"] != " ") {
-	array_push($_SESSION["todo"], $_POST["todo_title"]);
+	if (!$_SESSION["todo"]) {
+		$_SESSION["todo"] = [];
+		array_push($_SESSION["todo"], $_POST["todo_title"]);
+	}else{
+		array_push($_SESSION["todo"], $_POST["todo_title"]);
+	}
 };
 
 //delete data
@@ -27,7 +31,7 @@ if (isset($_POST["delete_id"])) {
 
 
 //update data
-if ( ($_POST["type"] == "update" && isset($_POST["todo_title"])) && $_POST["todo_title"] != "") {
+if ( (isset($_POST["type"]) && $_POST["type"] == "update" && isset($_POST["todo_title"])) && $_POST["todo_title"] != "") {
 	 $_SESSION["todo"][$_POST["update_id"]] = $_POST["todo_title"]; 
 
 }
@@ -45,7 +49,8 @@ if ((isset($_POST["update_name"]) && isset($_POST["update_id"])) && $_POST["upda
 
 
 echo "<pre>";
-print_r($_SESSION);
+	print_r($_SESSION);
+
 echo "</pre>";
 ?>
 
@@ -82,7 +87,9 @@ echo "</pre>";
 	<div> 
 		<div id="result">
 			<ul class="ul" >
-			<?php foreach ($_SESSION["todo"] as $key=>$items) {?>
+			<?php
+			if (isset($_SESSION["todo"])) {
+				foreach ($_SESSION["todo"] as $key=>$items) {?>
 				<li class="result_list"> 
 					<div class="items"><span class="index" style="margin-right:5px;"><?php echo $key <10 ? "0".$key : $key?></span>
 						<span ><?php echo $items?></span>
@@ -107,7 +114,8 @@ echo "</pre>";
 					</div>
 
 				</li>
-			<?php }?>
+			<?php }}?>
+
 			</ul>
 		</div>
 	</div>
