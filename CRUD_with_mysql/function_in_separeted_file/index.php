@@ -127,10 +127,10 @@ if (isset($conn)) {
 					</div>
 					<div style="display:flex; align-items:center;;">
 					
-						<form action="delete.php" name="delete_form' method="POST" style="margin:0px 2px">
+						<form action="delete.php" name="delete_form" method="POST" style="margin:0px 2px">
 							<input type="hidden" name="delete_id" id="delete_id" value='<?php echo $row['id'];?>' />
 							<input type="hidden" name="type" value="delete">
-							<button type="submit" >delet</button>
+							<button type="button" onclick="delete_ajax(delete_form.delete_id.value)">delete</button>
 						</form>
 						
 						<form action="index.php" method="POST" style="margin:0px 2px ">
@@ -155,11 +155,27 @@ if (isset($conn)) {
 	</div>
 	<?php
 
-	echo "
+	echo '
 	
+					<script>
+						function delete_ajax (delete_id) {
+							function loadDoc() {
+								var xmlhttp = new XMLHttpRequest();
+								xmlhttp.onreadystatechange = function() {
+								  if (this.readyState == 4 && this.status == 200) {
+									alert(this.responseText);
+								  }
+								};
+								xmlhttp.open("GET","delete.php?delete_id="+delete_id,true);
+								xmlhttp.send();
+							};
+
+							alert(delete_id);
+						}
+
+					</script>
 	
-	
-	";
+	';
 	?>
 </body>
 </html>
