@@ -1,5 +1,5 @@
-<?php 
 
+<?php 
 //session_start();
 //session_unset();
 //database connection_aborted
@@ -7,14 +7,46 @@
 $hostname = "localhost";
 $username = "root";
 $password = "";
-$db_name = "crud";
+$db_name = "crud_test";
 
-$conn = mysqli_connect($hostname,$username,'',$db_name);
+$conn = mysqli_connect($hostname,$username,'',$db_name ?? '');
 if ($conn) {
-	echo "database connected ! <br>";
+	
 }else {
-	die(mysqli_connect_error());
+	?>
+	<script>
+		alert("Crate mysqli database first. and careate tabele name 'crud_test'. A fild name must 'todo'. ");
+	</script>
+	<?php
+	//die(mysqli_connect_error());
 };
+
+
+
+
+	//print_r($_SESSION);
+	if (isset($conn)) {
+		$sql_data = "SELECT * FROM crud_test";
+		if (mysqli_query($conn, $sql_data)) {
+			$result = mysqli_query($conn, $sql_data);
+			while ($row = mysqli_fetch_array($result)) {
+				$row['todo'];
+			};
+		}else {
+			$tabel = "CREATE TABLE curd_test (
+				id int AUTO_INCREMENT,
+				todo varchar(255),
+			)";
+			if (mysqli_query($conn, $tabel)) {
+				?>
+					<script>
+						alert('Successfully Table Created');
+					</script>
+				<?php
+			}
+		}
+		
+	}
 
 // echo "<pre> From Server  : <br>";
 // 	//print_r( "SELECT * FROM 'crud_test' WHERE id = 1");
@@ -70,7 +102,12 @@ if(isset($_POST["type"]) == "insert" && isset($_POST["todo_title"]) && $_POST["u
 		if ($conn->query($insrt) === TRUE) {
 		  echo "New record created successfully";
 		} else {
-		  echo "Error: " . $sql . "<br>" . $conn->error;
+			?>
+				<script>
+					alert('Table not fount. Crete a table name "curd_test"');
+				</script>
+			<?php
+		  	echo "Error: " . $sql . "<br>" . $conn->error;
 		}
 		
 	}else{
@@ -110,14 +147,6 @@ if (isset($_POST['delete_id']) && $_POST['type'] == "delete") {
 
 
 
-	//print_r($_SESSION);
-if (isset($conn)) {
-	$sql_data = "SELECT * FROM crud_test";
-	$result = mysqli_query($conn, $sql_data);
-	while ($row = mysqli_fetch_array($result)) {
-		$row['todo'];
-	};
-}
 	
 
 

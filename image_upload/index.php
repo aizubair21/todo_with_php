@@ -32,7 +32,7 @@
  </label>
 
 
-<div id="fakemail">
+<div id="fakemail" style="padding:10px">
 
 	<form action="sent_mail.php" method="post" enctype="multipart/form-data" name="send_mail">
 
@@ -43,36 +43,12 @@
 
 </div>
 
-<div id="live" >
-	<form action="gethint.php" method="POST">
-	<input type="search" name="search_key" id="search_key" placeholder="type...."  onkeyup="show_result(this.value)" autocomplete="off">
-	<p id="result"> result are placed here </p>
-	<input type="submit" value="check">
-	</form>
- </div>
+
 
 <script>
 
 
 
-function show_result (key) {
-	let result_display = document.getElementById("result").innerHTML;
-	
-	if (key == " " || key == "") {
-		document.getElementById("result").innerHTML = "";
-	} else {
-		var XHR = new XMLHttpRequest();
-		XHR.onreadystatechange = function () {
-			if (this.readyState == 4 && this.status == 200) {
-				document.getElementById("result").innerHTML = this.responseText;
-			}
-		};
-		
-		XHR.open ("POST", "gethint.php?q="+key, false);
-		XHR.send();
-	}
-	
-};
 
 
 
