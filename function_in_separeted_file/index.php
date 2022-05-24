@@ -4,18 +4,7 @@
 //session_unset();
 //database connection_aborted
 
-$hostname = "localhost";
-$username = "root";
-$password = "";
-$db_name = "crud";
-
-$conn = mysqli_connect($hostname,$username,'',$db_name);
-if ($conn) {
-	echo "database connected ! <br>";
-}else {
-	die(mysqli_connect_error());
-};
-
+include "connection.php";
 // echo "<pre> From Server  : <br>";
 // 	//print_r( "SELECT * FROM 'crud_test' WHERE id = 1");
 // echo "</pre>";
@@ -130,14 +119,14 @@ if (isset($conn)) {
 						<form action="delete.php" name="delete_form" method="POST" style="margin:0px 2px">
 							<input type="hidden" name="delete_id" id="delete_id" value='<?php echo $row['id'];?>' />
 							<input type="hidden" name="type" value="delete">
-							<button type="button" onclick="delete_ajax(delete_form.delete_id.value)">delete</button>
+							<button type="submit">delete</button>
 						</form>
 						
 						<form action="index.php" method="POST" style="margin:0px 2px ">
 							<input type="hidden" name="update_name" id="update" value="<?php echo $row['todo']?>" />
 							<input type="hidden" name="update_id" value="<?php echo $row['id']?>" />
 							<input type="hidden" name="type" value="update">
-							<button> update </button>
+							<button type="submit"> update </button>
 							
 							<br>
 							
